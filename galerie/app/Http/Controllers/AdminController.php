@@ -9,13 +9,14 @@ class AdminController extends Controller
     // Zobrazení administrační stránky
     public function index()
     {
-        // Kontrola, zda je relace stále platná
-        if (!session()->has('authenticated') || now()->greaterThan(session('authenticated_expiration'))) {
+        // Zkontrolujeme, zda je nastavena hodnota pro expiration
+        if (!session()->has('authenticated') || !session()->has('authenticated_expiration') || now()->greaterThan(session('authenticated_expiration'))) {
             session()->forget(['authenticated', 'authenticated_expiration']);
         }
 
         return view('admin.index');
     }
+
 
     // Ověření hesla
     public function authenticate(Request $request)
@@ -36,4 +37,5 @@ class AdminController extends Controller
 
         return redirect()->route('admin.index')->withErrors(['password' => 'Špatné heslo!']);
     }
+    
 }

@@ -63,7 +63,7 @@ class GalleryController extends Controller
             'src' => $imagePath,
         ]);
 
-        return redirect()->route('admin')->with('success', 'Obrázek úspěšně přidán!');
+        return redirect()->route('admin.index')->with('success', 'Obrázek úspěšně přidán!');
     }
 }
 
