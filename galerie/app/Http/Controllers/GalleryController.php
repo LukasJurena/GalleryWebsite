@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use App\Models\Album;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
@@ -10,11 +11,12 @@ class GalleryController extends Controller
     // Domovská stránka - zobrazení všech obrázků
     public function index(Request $request)
     {
+        $albums = Album::all(); // Načítání všech alb pro výběr
         $query = Image::query();
 
-        // Filtrování podle kategorie
-        if ($request->has('category')) {
-            $query->where('category', $request->category);
+        // Filtrování podle alba
+        if ($request->has('album_id') && $request->album_id) {
+            $query->where('album_id', $request->album_id);
         }
 
         // Vyhledávání podle názvu nebo popisu
@@ -26,20 +28,45 @@ class GalleryController extends Controller
         // Řazení podle data přidání (nebo jiného atributu)
         $images = $query->orderBy('created_at', 'desc')->paginate(12);
 
-        return view('gallery.index', compact('images'));
+        return view('gallery.index', compact('images', 'albums'));
     }
 
-    // Stránka s albem (detail jednoho obrázku)
-    public function show($id)
+    // Stránka s albem (zobrazení obrázků v konkrétním albu)
+    public function showAlbum($id)
     {
-        $image = Image::findOrFail($id);
-        return view('gallery.show', compact('image'));
+        $album = Album::with('images')->findOrFail($id);
+        return view('gallery.album', compact('album'));
+    }
+
+    // Administrativní sekce pro správu alb
+    public function adminAlbums()
+    {
+        $albums = Album::all();
+        return view('admin.albums', compact('albums'));
+    }
+
+    // Vytvoření nového alba
+    public function storeAlbum(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        Album::create([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('admin.albums')->with('success', 'Album bylo úspěšně vytvořeno!');
     }
 
     // Administrativní sekce pro nahrávání obrázků
     public function admin()
     {
-        return view('admin.index');
+        $albums = Album::all();
+        
+        return view('admin.index', compact('albums'));
     }
 
     // Uložení nového obrázku do databáze
@@ -47,23 +74,27 @@ class GalleryController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'alt' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'category' => 'nullable|string',
+            'album_id' => 'nullable|exists:albums,id',
             'image' => 'required|image|max:2048',
         ]);
 
         $imagePath = $request->file('image')->store('images', 'public');
 
+        // Automatické generování alt textu
+        $altText = $request->title;
+        if ($request->description) {
+            $altText .= ' - ' . $request->description;
+        }
+
         Image::create([
             'title' => $request->title,
-            'alt' => $request->alt,
+            'alt' => $altText,
             'description' => $request->description,
-            'category' => $request->category,
+            'album_id' => $request->album_id,
             'src' => $imagePath,
         ]);
 
         return redirect()->route('admin.index')->with('success', 'Obrázek úspěšně přidán!');
     }
-}
-
+};

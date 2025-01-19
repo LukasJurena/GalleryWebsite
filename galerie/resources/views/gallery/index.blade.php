@@ -11,13 +11,13 @@
 
     <h1>Galerie</h1>
 
-    <!-- Filtrování podle kategorie -->
+    <!-- Filtrování podle alba -->
     <form action="{{ route('home') }}" method="GET">
-        <select name="category">
-            <option value="">Všechny kategorie</option>
-            <option value="Nature">Příroda</option>
-            <option value="City">Města</option>
-            <option value="People">Lidé</option>
+        <select name="album_id">
+            <option value="">Všechna alba</option>
+            @foreach ($albums as $album)
+                <option value="{{ $album->id }}">{{ $album->name }}</option>
+            @endforeach
         </select>
         <input type="text" name="search" placeholder="Hledat obrázky">
         <button type="submit">Filtruj</button>

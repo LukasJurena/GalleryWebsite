@@ -10,4 +10,9 @@ class Image extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'src', 'alt', 'description', 'category'];
+    
+    public function album()
+    {
+        return $this->belongsTo(Album::class);
+    }
 }
