@@ -30,8 +30,13 @@ class GalleryController extends Controller
 
         return view('gallery.index', compact('images', 'albums'));
     }
-
+    public function showImage($id)
+    {
+        $image = Image::findOrFail($id);
+        return view('gallery.show', compact('image'));
+    }
     // Stránka s albem (zobrazení obrázků v konkrétním albu)
+    
     public function showAlbum($id)
     {
         $album = Album::with('images')->findOrFail($id);
