@@ -9,10 +9,15 @@ class Image extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'src', 'alt', 'description', 'category'];
+    protected $fillable = ['title', 'src', 'alt', 'description', 'category', 'album_id'];
+
+    protected $attributes = [
+        'alt' => 'Výchozí alternativní text',
+    ];
     
     public function album()
     {
         return $this->belongsTo(Album::class);
     }
+    
 }

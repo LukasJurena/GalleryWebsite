@@ -1,6 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Route;
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -25,4 +24,6 @@ Route::get('/image/{id}', [GalleryController::class, 'showImage'])->name('galler
 
 // Zobrazení alba
 Route::get('/album/{id}', [GalleryController::class, 'showAlbum'])->name('album.show');
-Route::get('/album/{albumId}/image/{imageId}', [GalleryController::class, 'showImage'])->name('image.show');
+
+Route::get('image/{imageId}', [GalleryController::class, 'showImage'])->name('image.show');
+

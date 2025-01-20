@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\View;
+use App\Models\Album;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -19,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Sdílení všech alb pro všechny šablony
+        View::share('albums', Album::all());
     }
 }

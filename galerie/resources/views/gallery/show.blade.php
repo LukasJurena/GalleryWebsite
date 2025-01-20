@@ -1,12 +1,6 @@
 <!-- resources/views/gallery/show.blade.php -->
-
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $image->title }}</title>
-</head>
+@extends('layouts.app')
+@section('content')
 <body>
 
     <h1>{{ $image->title }}</h1>
@@ -16,5 +10,4 @@
 
     <a href="{{ route('home') }}">Zpět na galerii</a>
 
-</body>
-</html>
+@endsection

@@ -1,17 +1,15 @@
 <!-- resources/views/gallery/album.blade.php -->
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $album->name }}</title>
-</head>
+@extends('layouts.app')
+@section('content')
 <body>
 
     <h1>{{ $album->name }}</h1>
     <p>{{ $album->description }}</p>
 
     <div class="gallery">
+        {{-- Debug výstup --}}
+        <pre>{{ var_dump($album->images) }}</pre>
+        
         @foreach ($album->images as $image)
             <div class="gallery-item">
                 <a href="{{ route('image.show', $image->id) }}">
@@ -21,6 +19,5 @@
             </div>
         @endforeach
     </div>
-    
-</body>
-</html>
+@endsection
+
