@@ -20,9 +20,11 @@ class GalleryController extends Controller
         }
 
         // Vyhledávání podle názvu nebo popisu
-        if ($request->has('search')) {
-            $query->where('title', 'like', '%' . $request->search . '%')
-                ->orWhere('description', 'like', '%' . $request->search . '%');
+        if ($request->has('search') && $request->search) {
+            $query->where(function($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                  ->orWhere('description', 'like', '%' . $request->search . '%');
+            });
         }
 
         // Řazení podle data přidání (nebo jiného atributu)
@@ -70,8 +72,8 @@ class GalleryController extends Controller
     public function admin()
     {
         $albums = Album::all();
-        
-        return view('admin.index', compact('albums'));
+        $images = Image::all();
+        return view('admin.index', compact('albums', 'images'));
     }
 
     // Uložení nového obrázku do databáze
@@ -101,5 +103,65 @@ class GalleryController extends Controller
         ]);
 
         return redirect()->route('admin.index')->with('success', 'Obrázek úspěšně přidán!');
+        
+    }
+    public function editImage($id)
+    {
+        $image = Image::findOrFail($id);
+        return response()->json($image);
+    }
+
+    // Aktualizace obrázku
+    public function updateImage(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'album_id' => 'nullable|exists:albums,id',
+        ]);
+
+        $image = Image::findOrFail($id);
+        $image->update($request->only('title', 'description', 'album_id'));
+
+        return redirect()->route('admin.index')->with('success', 'Obrázek byl aktualizován!');
+    }
+
+    // Mazání obrázku
+    public function destroyImage($id)
+    {
+        $image = Image::findOrFail($id);
+        $image->delete();
+
+        return redirect()->route('admin.index')->with('success', 'Obrázek byl smazán!');
+    }
+
+    // Editace alba
+    public function editAlbum($id)
+    {
+        $album = Album::findOrFail($id);
+        return response()->json($album);
+    }
+
+    // Aktualizace alba
+    public function updateAlbum(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $album = Album::findOrFail($id);
+        $album->update($request->only('name', 'description'));
+
+        return redirect()->route('admin.albums')->with('success', 'Album bylo aktualizováno!');
+    }
+
+    // Mazání alba
+    public function destroyAlbum($id)
+    {
+        $album = Album::findOrFail($id);
+        $album->delete();
+
+        return redirect()->route('admin.albums')->with('success', 'Album bylo smazáno!');
     }
 };
