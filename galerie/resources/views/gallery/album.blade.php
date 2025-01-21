@@ -7,8 +7,10 @@
     <p>{{ $album->description }}</p>
 
     <div class="gallery">
+        <!--
         {{-- Debug výstup --}}
         <pre>{{ var_dump($album->images) }}</pre>
+        -->
         
         @foreach ($album->images as $image)
             <div class="gallery-item">

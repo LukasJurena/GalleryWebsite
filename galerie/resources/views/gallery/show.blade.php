@@ -8,6 +8,7 @@
     <p>{{ $image->description }}</p>
     <p><strong>Kategorie:</strong> {{ $image->category }}</p>
 
-    <a href="{{ route('home') }}">Zpět na galerii</a>
+    <!-- Odkaz zpět na album -->
+    <a href="{{ route('album.show', $image->album_id) }}">Zpět na album</a>
 
 @endsection
