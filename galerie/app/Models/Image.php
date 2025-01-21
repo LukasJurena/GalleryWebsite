@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
-
+    protected $table = 'images';
     protected $fillable = ['title', 'src', 'alt', 'description', 'category', 'album_id'];
 
     protected $attributes = [

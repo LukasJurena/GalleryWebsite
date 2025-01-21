@@ -100,7 +100,6 @@
         <nav>
             <ul>
                 <li><a href="{{ route('home') }}">Domů</a></li>
-                <li><a href="{{ route('admin.index') }}">Admin</a></li>
                 <li>
                     <div class="dropdown">
                         <button class="dropdown-toggle">Alba</button>
@@ -129,7 +128,10 @@
     </main>
 
     <footer>
-        <p>© {{ date('Y') }} Tvá Galerie. Všechna práva vyhrazena.</p>
+        <ul></ul>
+        <li><p>© {{ date('Y') }} Tvá Galerie. Všechna práva vyhrazena.</p></li>
+        <li><a href="{{ route('admin.index') }}">Admin</a></li>
+        </ul>
     </footer>
 </body>
 </html>
