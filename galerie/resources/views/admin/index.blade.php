@@ -1,104 +1,98 @@
 <!-- GalleryWebsite/galerie/resources/views/admin/index.blade.php -->
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Nahrání obrázku</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
+@extends('layouts.app')
+@section('content')
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
 
-        h1, h2 {
-            color: #333;
-            text-align: center;
-        }
+    h1, h2 {
+        color: #333;
+        text-align: center;
+    }
 
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    .container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
 
-        input, textarea, select, button {
-            padding: 10px;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+    input, textarea, select, button {
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
 
-        button:hover {
-            background-color: #45a049;
-        }
+    button:hover {
+        background-color: #45a049;
+    }
 
-        label {
-            font-size: 1rem;
-            margin-bottom: 5px;
-        }
+    label {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
 
-        hr {
-            margin: 30px 0;
-        }
+    hr {
+        margin: 30px 0;
+    }
 
-        ul {
-            list-style: none;
-            padding: 0;
-        }
+    ul {
+        list-style: none;
+        padding: 0;
+    }
 
-        li {
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
-        }
+    li {
+        background-color: #f9f9f9;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+    }
 
-        strong {
-            color: #333;
-        }
+    strong {
+        color: #333;
+    }
 
-        .album-info {
-            font-size: 0.9rem;
-            color: #777;
-        }
+    .album-info {
+        font-size: 0.9rem;
+        color: #777;
+    }
 
-        .auth-form {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    .auth-form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-    </style>
-</head>
-<body>
+</style>
     <h1>Administrace - Nahrání obrázku</h1>
 
     @if (!session('authenticated'))
@@ -154,5 +148,4 @@
             </ul>
         </div>
     @endif
-</body>
-</html>
+@endsection
